@@ -6,8 +6,13 @@ import {
   SubmissionError
 } from 'redux-form';
 import _ from 'lodash';
+import DatePicker from 'react-datepicker';
+import moment from 'moment';
+
+import 'react-datepicker/dist/react-datepicker.css';
 
 import { FORM_FIELDS } from '../../constants';
+import { toPrecision } from '../../utils/asset';
 
 import './styles.scss';
 
@@ -25,9 +30,29 @@ const renderField = ({
   </div>
 );
 
-class AssetFormComponent extends Component {
+const renderDatePicker = ({ input, meta: { error } }) => (
+  <div>
+    <DatePicker {...input} placeholderText="Date" dateForm="MM/DD/YYYY" selected={input.value ? moment(input.value) : null} />
+    {error && <span>{error}</span>}
+  </div>
+);
+
+export class AssetFormComponent extends Component {
   componentWillMount() {
     document.addEventListener('keydown', this.onKeyPressed);
+  }
+
+  componentDidUpdate() {
+    const {
+      isFormOpen,
+      isInitialized,
+      actions,
+      initialValues
+    } = this.props;
+
+    if (isFormOpen && !isInitialized) {
+      actions.setInitialValues(initialValues);
+    }
   }
 
   componentWillUnmount() {
@@ -41,7 +66,7 @@ class AssetFormComponent extends Component {
 
     if (e.key === 'Enter') {
       e.preventDefault();
-      this.handleSubmit();
+      this.props.handleSubmit(this.handleSubmit)();
     }
   };
 
@@ -52,23 +77,27 @@ class AssetFormComponent extends Component {
 
   handleSubmit = (values) => {
     const {
-      actions, assetToEdit
+      actions, assetId
     } = this.props;
 
     if (FORM_FIELDS.every(field => _.has(values, field))) {
       const {
-        name,
-        date,
-        quantity,
         price,
         comission,
         currentPrice,
       } = values;
 
-      if (!assetToEdit) {
-        actions.addAsset(uuidv1(), values);
+      const submitValues = {
+        ...values,
+        price: toPrecision(price, 5),
+        comission: toPrecision(comission, 5),
+        currentPrice: toPrecision(currentPrice, 5)
+      };
+
+      if (!assetId) {
+        actions.addAsset(uuidv1(), submitValues);
       } else {
-        actions.updateAsset(assetToEdit, values);
+        actions.updateAsset(assetId, submitValues);
       }
 
       this.handleClose();
@@ -87,14 +116,17 @@ class AssetFormComponent extends Component {
   render() {
     const {
       isFormOpen,
-      assetToEdit,
+      assetId,
       handleSubmit,
-      error
+      error,
+      values
     } = this.props;
 
     if (!isFormOpen) {
       return null;
     }
+
+    const sum = values && values.quantity && values.price && (values.quantity * parseFloat(values.price)).toString();
 
     return (
       <div className="form-wrapper">
@@ -106,9 +138,41 @@ class AssetFormComponent extends Component {
               component={renderField}
               label="Name"
             />
+            <Field
+              name="date"
+              component={renderDatePicker}
+              label="Date"
+              type="text"
+            />
+            <Field
+              name="quantity"
+              component={renderField}
+              parse={value => Number(value)}
+              label="Quantity"
+              type="number"
+            />
+            <Field
+              name="price"
+              component={renderField}
+              label="Price"
+              type="text"
+            />
+            <input type="text" value={sum} readOnly />
+            <Field
+              name="comission"
+              component={renderField}
+              label="Comission"
+              type="text"
+            />
+            <Field
+              name="currentPrice"
+              component={renderField}
+              label="Current Price"
+              type="text"
+            />
             {error && <strong>{error}</strong>}
             <button type="button" className="button_close" onClick={this.handleClose}>Cancel</button>
-            <button type="submit" className="button_submit">{assetToEdit ? 'Save' : 'Create'}</button>
+            <button type="submit" className="button_submit">{assetId ? 'Save' : 'Create'}</button>
           </Form>
         </div>
       </div>

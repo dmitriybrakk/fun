@@ -1,7 +1,7 @@
 import { connect } from 'react-redux';
 import { bindActionCreators } from 'redux';
 
-import { openForm } from '../actions/form';
+import { editAsset } from '../actions/assets';
 
 import { Portfolio } from '../components/portfolio';
 
@@ -11,7 +11,7 @@ const mapStateToProps = state => ({
 
 const mapDispatchToProps = dispatch => ({
   actions: bindActionCreators({
-    openForm
+    editAsset
   }, dispatch)
 });
 

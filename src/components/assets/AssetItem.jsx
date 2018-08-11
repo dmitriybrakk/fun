@@ -2,7 +2,7 @@ import React, { Component } from 'react';
 
 export class AssetItem extends Component {
   handleEditAsset = () => {
-    this.props.actions.openForm(this.props.assetId);
+    this.props.actions.editAsset(this.props.assetId);
   };
 
   handleRemoveAsset = () => {

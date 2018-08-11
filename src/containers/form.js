@@ -3,33 +3,31 @@ import { bindActionCreators } from 'redux';
 import _ from 'lodash';
 
 import { addAsset, updateAsset } from '../actions/assets';
-import { closeForm } from '../actions/form';
+import { closeForm, setInitialValues } from '../actions/form';
 
 import { AssetForm } from '../components/assets';
 
-const mapStateToProps = state => ({
-  assets: state.assets,
-  isFormOpen: _.get(state, ['form', 'asset', 'isFormOpen']),
-  assetToEdit: _.get(state, ['form', 'asset', 'assetToEdit'])
-});
+const mapStateToProps = (state) => {
+  const assetId = _.get(state, ['form', 'asset', 'id']);
+  const values = _.get(state, ['form', 'asset', 'values']);
+  const initialValues = _.get(state, ['assets', assetId], {});
+
+  return {
+    isFormOpen: _.get(state, ['form', 'asset', 'isFormOpen']),
+    isInitialized: _.get(state, ['form', 'asset', 'isInitialized']),
+    assetId,
+    initialValues,
+    values
+  };
+};
 
 const mapDispatchToProps = dispatch => ({
   actions: bindActionCreators({
     addAsset,
     updateAsset,
-    closeForm
+    closeForm,
+    setInitialValues
   }, dispatch)
 });
 
-const mergeProps = (stateProps, dispatchProps, ownProps) => {
-  const { assets, assetToEdit } = stateProps;
-
-  return {
-    ...stateProps,
-    ...dispatchProps,
-    ...ownProps,
-    initialValues: assetToEdit && assets[assetToEdit]
-  };
-};
-
-export const AssetFormContainer = connect(mapStateToProps, mapDispatchToProps, mergeProps)(AssetForm);
+export const AssetFormContainer = connect(mapStateToProps, mapDispatchToProps)(AssetForm);
