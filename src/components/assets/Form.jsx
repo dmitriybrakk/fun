@@ -1,7 +1,17 @@
 import React, { Component } from 'react';
-import { Field, reduxForm, Form } from 'redux-form';
+import {
+  reduxForm,
+  Form,
+  Field,
+  SubmissionError
+} from 'redux-form';
+import _ from 'lodash';
+
+import { FORM_FIELDS } from '../../constants';
 
 import './styles.scss';
+
+const uuidv1 = require('uuid/v1');
 
 const renderField = ({
   input, label, type, meta: { error }
@@ -16,8 +26,62 @@ const renderField = ({
 );
 
 class AssetFormComponent extends Component {
+  componentWillMount() {
+    document.addEventListener('keydown', this.onKeyPressed);
+  }
+
+  componentWillUnmount() {
+    document.removeEventListener('keydown', this.onKeyPressed);
+  }
+
+  onKeyPressed = (e) => {
+    if (e.key === 'Escape') {
+      this.handleClose();
+    }
+
+    if (e.key === 'Enter') {
+      e.preventDefault();
+      this.handleSubmit();
+    }
+  };
+
   handleClose = () => {
     this.props.actions.closeForm();
+    this.props.reset();
+  };
+
+  handleSubmit = (values) => {
+    const {
+      actions, assetToEdit
+    } = this.props;
+
+    if (FORM_FIELDS.every(field => _.has(values, field))) {
+      const {
+        name,
+        date,
+        quantity,
+        price,
+        comission,
+        currentPrice,
+      } = values;
+
+      if (!assetToEdit) {
+        actions.addAsset(uuidv1(), values);
+      } else {
+        actions.updateAsset(assetToEdit, values);
+      }
+
+      this.handleClose();
+    } else {
+      FORM_FIELDS.forEach((field) => {
+        if (!_.has(values, field)) {
+          throw new SubmissionError({
+            [field]: 'This field is required',
+            _error: 'Please fill in blank fields'
+          });
+        }
+      });
+    }
   };
 
   render() {
@@ -35,7 +99,7 @@ class AssetFormComponent extends Component {
     return (
       <div className="form-wrapper">
         <div className="form">
-          <Form onSubmit={handleSubmit}>
+          <Form onSubmit={handleSubmit(this.handleSubmit)}>
             <Field
               name="name"
               type="text"

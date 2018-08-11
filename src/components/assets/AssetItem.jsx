@@ -1,12 +1,12 @@
 import React, { Component } from 'react';
 
 export class AssetItem extends Component {
-  handleOpenForm = () => {
-    this.props.onOpenForm(this.props.assetId);
+  handleEditAsset = () => {
+    this.props.actions.openForm(this.props.assetId);
   };
 
   handleRemoveAsset = () => {
-    this.props.onRemoveAsset(this.props.assetId);
+    this.props.actions.removeAsset(this.props.assetId);
   };
 
   render() {
@@ -19,7 +19,7 @@ export class AssetItem extends Component {
         <div>
           {assetValues.name}
         </div>
-        <button onClick={this.handleOpenForm}>
+        <button onClick={this.handleEditAsset}>
           Edit
         </button>
         <button onClick={this.handleRemoveAsset}>
