@@ -12,7 +12,7 @@ import 'react-datepicker/dist/react-datepicker.css';
 
 import { FORM_FIELDS, FIELDS_NAMES } from '../../constants/index';
 
-import { toPrecision } from '../../utils/asset';
+import { toPrecision, getTotal } from '../../utils/asset';
 
 import './styles.scss';
 
@@ -54,7 +54,8 @@ export class AssetFormComponent extends Component {
         price,
         comission,
         currentPrice,
-        date
+        date,
+        quantity
       } = values;
 
       const submitValues = {
@@ -62,7 +63,8 @@ export class AssetFormComponent extends Component {
         price: toPrecision(price, 4),
         comission: toPrecision(comission, 4),
         currentPrice: toPrecision(currentPrice, 4),
-        date: moment(date).format('YYYY-MM-DD')
+        date: moment(date).format('YYYY-MM-DD'),
+        total: getTotal(quantity, price)
       };
 
       if (!assetId) {
@@ -85,13 +87,14 @@ export class AssetFormComponent extends Component {
   };
 
   renderFields = () => {
-    const { quantity, price } = this.props;
-    const total = (quantity && price && (quantity * parseFloat(price)).toString()) || '';
+    const { quantity, price, total } = this.props;
+    const totalSum = total || getTotal(quantity, price);
 
     return FORM_FIELDS.map((field) => {
       const { name } = field;
+
       const isTotalField = name === 'total';
-      const totalValue = (isTotalField && toPrecision(total, 4)) || undefined;
+      const totalValue = (isTotalField && toPrecision(totalSum, 4)) || undefined;
 
       return (
         <Field

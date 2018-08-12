@@ -8,7 +8,7 @@ const updateAssets = (state, asset) => {
   });
 
   return Object.entries(updatedState).reduce((collection, [, collectionItem]) => {
-    if (asset.name === collectionItem.name && asset.date === collectionItem.date) {
+    if (asset.name === collectionItem.name) {
       return {
         ...collection,
         [collectionItem.id]: {

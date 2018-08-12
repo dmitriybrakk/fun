@@ -15,7 +15,7 @@ export class AssetItem extends Component {
   };
 
   render() {
-    const { id, ...displayValues } = this.props.assetValues;
+    const { id, total, ...displayValues } = this.props.assetValues;
 
     return (
       <div className="asset">

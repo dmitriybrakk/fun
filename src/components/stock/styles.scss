@@ -1,5 +1,11 @@
-.spinner {
+.stock-table {
   display: flex;
+  margin-top: 25px;
+  flex-direction: column;
   justify-content: center;
-  margin-top: 40px;
+  align-items: center;
+}
+
+.spinner-text {
+  margin-top: 10px;
 }
