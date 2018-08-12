@@ -108,7 +108,7 @@ export class AssetFormComponent extends Component {
         className="form-button"
         onClick={this.handleClose}
       >
-        Cancel
+        Close
       </button>
       <button
         type="submit"

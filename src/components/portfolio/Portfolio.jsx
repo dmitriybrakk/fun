@@ -2,6 +2,8 @@ import React, { Component } from 'react';
 
 import { AssetItemContainer } from '../../containers';
 
+import '../../styles/buttons.scss';
+import '../../styles/table.scss';
 import './styles.scss';
 
 export class Portfolio extends Component {
@@ -11,20 +13,22 @@ export class Portfolio extends Component {
 
   render() {
     return (
-      <div>
+      <div className="content">
         <button
-          className="button"
+          className="button button_bold button_orange"
           onClick={this.handleClick}
         >
           Add asset
         </button>
-        {Object.entries(this.props.assets).map(([id, values]) => (
-          <AssetItemContainer
-            key={id}
-            assetId={id}
-            assetValues={values}
-          />
-        ))}
+        <div className="table">
+          {Object.values(this.props.assets).map(values => (
+            <AssetItemContainer
+              key={values.id}
+              assetId={values.id}
+              assetValues={values}
+            />
+          ))}
+        </div>
       </div>
     );
   }

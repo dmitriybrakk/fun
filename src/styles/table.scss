@@ -1,0 +1,55 @@
+@import "colors";
+
+.table {
+  margin-top: 30px;
+
+  &_header {
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    border-bottom: 1px solid $grey;
+
+    &__title {
+      color: #5d5d5d;
+      width: 13%;
+      padding: 3px 5px;
+    }
+  }
+
+  &_row {
+    display: flex;
+    width: 100%;
+    flex-direction: row;
+    border: none;
+    align-items: center;
+    text-align: left;
+    background: #fff;
+    padding: 20px;
+
+    &:hover {
+      cursor: pointer;
+      background: $hover;
+    }
+
+    &:focus {
+      outline: none;
+    }
+  }
+
+  &_cell {
+    margin-left: 10px;
+    font-size: 13px;
+    color: $text-color;
+    box-sizing: border-box;
+    flex-grow: 1;
+    width: 13%;
+    overflow: hidden;
+    padding: 3px 5px;
+    text-align: left;
+    vertical-align: top;
+
+    &:first-child {
+      margin: 0;
+    }
+  }
+}
