@@ -11,7 +11,7 @@ import moment from 'moment';
 
 import 'react-datepicker/dist/react-datepicker.css';
 
-import { FORM_FIELDS } from '../../constants';
+import { FORM_FIELDS } from '../../constants/index';
 import { toPrecision } from '../../utils/asset';
 
 import './styles.scss';
@@ -42,19 +42,6 @@ export class AssetFormComponent extends Component {
     document.addEventListener('keydown', this.onKeyPressed);
   }
 
-  componentDidUpdate() {
-    const {
-      isFormOpen,
-      isInitialized,
-      actions,
-      initialValues
-    } = this.props;
-
-    if (isFormOpen && !isInitialized) {
-      actions.setInitialValues(initialValues);
-    }
-  }
-
   componentWillUnmount() {
     document.removeEventListener('keydown', this.onKeyPressed);
   }
@@ -71,13 +58,15 @@ export class AssetFormComponent extends Component {
   };
 
   handleClose = () => {
-    this.props.actions.closeForm();
     this.props.reset();
+    this.props.onClose();
   };
 
   handleSubmit = (values) => {
     const {
-      actions, assetId
+      onAddAsset,
+      onUpdateAsset,
+      assetId
     } = this.props;
 
     if (FORM_FIELDS.every(field => _.has(values, field))) {
@@ -95,9 +84,9 @@ export class AssetFormComponent extends Component {
       };
 
       if (!assetId) {
-        actions.addAsset(uuidv1(), submitValues);
+        onAddAsset(uuidv1(), submitValues);
       } else {
-        actions.updateAsset(assetId, submitValues);
+        onUpdateAsset(assetId, submitValues);
       }
 
       this.handleClose();
@@ -115,18 +104,16 @@ export class AssetFormComponent extends Component {
 
   render() {
     const {
-      isFormOpen,
       assetId,
       handleSubmit,
       error,
+      fields,
       values
     } = this.props;
 
-    if (!isFormOpen) {
-      return null;
-    }
-
-    const sum = values && values.quantity && values.price && (values.quantity * parseFloat(values.price)).toString();
+    console.log(fields, values);
+    // const { quantity, price } = values;
+    // const sum = values && values.quantity && values.price && (values.quantity * parseFloat(values.price)).toString();
 
     return (
       <div className="form-wrapper">
@@ -157,7 +144,7 @@ export class AssetFormComponent extends Component {
               label="Price"
               type="text"
             />
-            <input type="text" value={sum} readOnly />
+            {/*<input value={sum} disabled />*/}
             <Field
               name="comission"
               component={renderField}

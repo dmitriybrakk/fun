@@ -1,17 +1,31 @@
-import React from 'react';
+import React, { Component } from 'react';
 
-import { AssetItemContainer, AssetFormContainer } from '../../containers';
+import { AssetItemContainer } from '../../containers';
 
-export const Portfolio = ({ actions, assets }) => (
-  <div>
-    <button onClick={() => actions.editAsset(null)}>Add asset</button>
-    {Object.entries(assets).map(([id, values]) => (
-      <AssetItemContainer
-        key={id}
-        assetId={id}
-        assetValues={values}
-      />
-    ))}
-    <AssetFormContainer />
-  </div>
-);
+import './styles.scss';
+
+export class Portfolio extends Component {
+  handleClick = () => {
+    this.props.actions.openModal(null);
+  };
+
+  render() {
+    return (
+      <div>
+        <button
+          className="button"
+          onClick={this.handleClick}
+        >
+          Add asset
+        </button>
+        {Object.entries(this.props.assets).map(([id, values]) => (
+          <AssetItemContainer
+            key={id}
+            assetId={id}
+            assetValues={values}
+          />
+        ))}
+      </div>
+    );
+  }
+}

@@ -1,9 +1,11 @@
 import { combineReducers } from 'redux';
+import { reducer as formReducer } from 'redux-form';
 
 import assets from './assetsReducer';
-import form from './assetFormReducer';
+import modal from './modalReducer';
 
 export default combineReducers({
   assets,
-  form
+  form: formReducer,
+  modal
 });
