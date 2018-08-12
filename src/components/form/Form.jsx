@@ -6,36 +6,16 @@ import {
   SubmissionError
 } from 'redux-form';
 import _ from 'lodash';
-import DatePicker from 'react-datepicker';
-import moment from 'moment';
 
 import 'react-datepicker/dist/react-datepicker.css';
 
-import { FORM_FIELDS } from '../../constants/index';
+import { FORM_FIELDS, FIELDS_NAMES } from '../../constants/index';
+
 import { toPrecision } from '../../utils/asset';
 
 import './styles.scss';
 
 const uuidv1 = require('uuid/v1');
-
-const renderField = ({
-  input, label, type, meta: { error }
-}) => (
-  <div>
-    <label>{label}</label>
-    <div>
-      <input {...input} placeholder={label} type={type} />
-      {error && <span>{error}</span>}
-    </div>
-  </div>
-);
-
-const renderDatePicker = ({ input, meta: { error } }) => (
-  <div>
-    <DatePicker {...input} placeholderText="Date" dateForm="MM/DD/YYYY" selected={input.value ? moment(input.value) : null} />
-    {error && <span>{error}</span>}
-  </div>
-);
 
 export class AssetFormComponent extends Component {
   componentWillMount() {
@@ -58,7 +38,6 @@ export class AssetFormComponent extends Component {
   };
 
   handleClose = () => {
-    this.props.reset();
     this.props.onClose();
   };
 
@@ -69,7 +48,7 @@ export class AssetFormComponent extends Component {
       assetId
     } = this.props;
 
-    if (FORM_FIELDS.every(field => _.has(values, field))) {
+    if (FIELDS_NAMES.every(field => _.has(values, field))) {
       const {
         price,
         comission,
@@ -78,20 +57,20 @@ export class AssetFormComponent extends Component {
 
       const submitValues = {
         ...values,
-        price: toPrecision(price, 5),
-        comission: toPrecision(comission, 5),
-        currentPrice: toPrecision(currentPrice, 5)
+        price: toPrecision(price, 4),
+        comission: toPrecision(comission, 4),
+        currentPrice: toPrecision(currentPrice, 4)
       };
 
       if (!assetId) {
-        onAddAsset(uuidv1(), submitValues);
+        onAddAsset({ id: uuidv1(), ...submitValues });
       } else {
-        onUpdateAsset(assetId, submitValues);
+        onUpdateAsset({ id: assetId, ...submitValues });
       }
 
       this.handleClose();
     } else {
-      FORM_FIELDS.forEach((field) => {
+      FIELDS_NAMES.forEach((field) => {
         if (!_.has(values, field)) {
           throw new SubmissionError({
             [field]: 'This field is required',
@@ -102,64 +81,54 @@ export class AssetFormComponent extends Component {
     }
   };
 
-  render() {
-    const {
-      assetId,
-      handleSubmit,
-      error,
-      fields,
-      values
-    } = this.props;
+  renderFields = () => {
+    const { quantity, price } = this.props;
+    const total = (quantity && price && (quantity * parseFloat(price)).toString()) || '';
 
-    console.log(fields, values);
-    // const { quantity, price } = values;
-    // const sum = values && values.quantity && values.price && (values.quantity * parseFloat(values.price)).toString();
+    return FORM_FIELDS.map((field) => {
+      const { name } = field;
+      const isTotalField = name === 'total';
+      const totalValue = (isTotalField && toPrecision(total, 4)) || undefined;
+
+      return (
+        <Field
+          key={name}
+          {...field}
+          customValue={totalValue}
+          disabled={isTotalField}
+        />
+      );
+    });
+  };
+
+  renderButtons = () => (
+    <div className="buttons">
+      <button
+        type="button"
+        className="form-button"
+        onClick={this.handleClose}
+      >
+        Cancel
+      </button>
+      <button
+        type="submit"
+        className="form-button"
+      >
+        {this.props.assetId ? 'Save' : 'Create'}
+      </button>
+    </div>
+  );
+
+  render() {
+    const { handleSubmit, error } = this.props;
 
     return (
       <div className="form-wrapper">
         <div className="form">
           <Form onSubmit={handleSubmit(this.handleSubmit)}>
-            <Field
-              name="name"
-              type="text"
-              component={renderField}
-              label="Name"
-            />
-            <Field
-              name="date"
-              component={renderDatePicker}
-              label="Date"
-              type="text"
-            />
-            <Field
-              name="quantity"
-              component={renderField}
-              parse={value => Number(value)}
-              label="Quantity"
-              type="number"
-            />
-            <Field
-              name="price"
-              component={renderField}
-              label="Price"
-              type="text"
-            />
-            {/*<input value={sum} disabled />*/}
-            <Field
-              name="comission"
-              component={renderField}
-              label="Comission"
-              type="text"
-            />
-            <Field
-              name="currentPrice"
-              component={renderField}
-              label="Current Price"
-              type="text"
-            />
+            {this.renderFields()}
             {error && <strong>{error}</strong>}
-            <button type="button" className="button_close" onClick={this.handleClose}>Cancel</button>
-            <button type="submit" className="button_submit">{assetId ? 'Save' : 'Create'}</button>
+            {this.renderButtons()}
           </Form>
         </div>
       </div>

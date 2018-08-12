@@ -9,18 +9,20 @@ export class Modal extends Component {
     this.props.actions.closeModal();
   };
 
-  handleAddAsset = (id, data) => {
-    this.props.actions.addAsset(id, data);
+  handleAddAsset = (data) => {
+    this.props.actions.addAsset(data);
   };
 
-  handleUpdateAsset = (id, data) => {
-    this.props.actions.updateAsset(id, data);
+  handleUpdateAsset = (data) => {
+    this.props.actions.updateAsset(data);
   };
 
   render() {
     const {
       modal,
-      values
+      initialValues,
+      quantity,
+      price
     } = this.props;
 
     if (!modal) return null;
@@ -29,10 +31,12 @@ export class Modal extends Component {
       <ModalPortal>
         <AssetForm
           assetId={modal.assetId}
-          initialValues={values}
+          initialValues={initialValues}
           onClose={this.handleClose}
           onAddAsset={this.handleAddAsset}
           onUpdateAsset={this.handleUpdateAsset}
+          quantity={quantity}
+          price={price}
         />
       </ModalPortal>
     );

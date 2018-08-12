@@ -1,7 +1,6 @@
 import { connect } from 'react-redux';
 import { bindActionCreators } from 'redux';
 
-import { editAsset } from '../actions/assets';
 import { openModal } from '../actions/modal';
 
 import { Portfolio } from '../components/portfolio';
@@ -12,7 +11,6 @@ const mapStateToProps = state => ({
 
 const mapDispatchToProps = dispatch => ({
   actions: bindActionCreators({
-    editAsset,
     openModal
   }, dispatch)
 });

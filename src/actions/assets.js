@@ -1,19 +1,20 @@
 import * as types from '../constants/action-types/assets';
 
-export function addAsset(id, values) {
+export function addAsset(asset) {
   return {
     type: types.ADD_ASSET,
     payload: {
-      id,
-      values
+      asset
     }
   };
 }
 
-export function editAsset(id) {
+export function updateAsset(asset) {
   return {
-    type: types.EDIT_ASSET,
-    payload: id
+    type: types.UPDATE_ASSET,
+    payload: {
+      asset
+    }
   };
 }
 
@@ -21,15 +22,5 @@ export function removeAsset(id) {
   return {
     type: types.REMOVE_ASSET,
     payload: id
-  };
-}
-
-export function updateAsset(id, values) {
-  return {
-    type: types.ADD_ASSET,
-    payload: {
-      id,
-      values
-    }
   };
 }
