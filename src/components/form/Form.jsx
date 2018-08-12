@@ -6,6 +6,7 @@ import {
   SubmissionError
 } from 'redux-form';
 import _ from 'lodash';
+import moment from 'moment';
 
 import 'react-datepicker/dist/react-datepicker.css';
 
@@ -53,13 +54,15 @@ export class AssetFormComponent extends Component {
         price,
         comission,
         currentPrice,
+        date
       } = values;
 
       const submitValues = {
         ...values,
         price: toPrecision(price, 4),
         comission: toPrecision(comission, 4),
-        currentPrice: toPrecision(currentPrice, 4)
+        currentPrice: toPrecision(currentPrice, 4),
+        date: moment(date).format('YYYY-MM-DD')
       };
 
       if (!assetId) {
