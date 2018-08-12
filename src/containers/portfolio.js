@@ -3,10 +3,12 @@ import { bindActionCreators } from 'redux';
 
 import { openModal } from '../actions/modal';
 
+import { getAssets } from '../utils/selectors';
+
 import { Portfolio } from '../components/portfolio';
 
 const mapStateToProps = state => ({
-  assets: state.assets
+  assets: getAssets(state)
 });
 
 const mapDispatchToProps = dispatch => ({

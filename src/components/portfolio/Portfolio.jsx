@@ -21,7 +21,7 @@ export class Portfolio extends Component {
           Add asset
         </button>
         <div className="table">
-          {Object.values(this.props.assets).map(values => (
+          {this.props.assets.map(values => (
             <AssetItemContainer
               key={values.id}
               assetId={values.id}

@@ -1,9 +1,11 @@
 import { connect } from 'react-redux';
 
-import { StockTable } from '../components/stock';
+import { getAssets } from '../utils/selectors';
+
+import { IndexTable } from '../components/index-table';
 
 const mapStateToProps = (state) => {
-  const stockTableData = Object.values(state.assets).reduce((data, asset) => {
+  const indexTableData = getAssets(state).reduce((data, asset) => {
     const { date, total } = asset;
 
     if (!data[date]) {
@@ -37,8 +39,8 @@ const mapStateToProps = (state) => {
 
   return {
     isLoading: state.stock.isLoading,
-    stockTableData
+    indexTableData
   };
 };
 
-export const StockTableContainer = connect(mapStateToProps)(StockTable);
+export const IndexTableContainer = connect(mapStateToProps)(IndexTable);

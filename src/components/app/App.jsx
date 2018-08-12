@@ -5,7 +5,7 @@ import './styles.scss';
 import {
   PortfolioContainer,
   ModalContainer,
-  StockTableContainer
+  IndexTableContainer
 } from '../../containers';
 
 export class App extends Component {
@@ -18,7 +18,7 @@ export class App extends Component {
       <div className="app">
         <PortfolioContainer />
         <ModalContainer />
-        <StockTableContainer />
+        <IndexTableContainer />
       </div>
     );
   }

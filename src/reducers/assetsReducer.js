@@ -7,7 +7,7 @@ const updateAssets = (state, asset) => {
     [asset.id]: asset
   });
 
-  return Object.entries(updatedState).reduce((collection, [, collectionItem]) => {
+  return Object.values(updatedState).reduce((collection, collectionItem) => {
     if (asset.name === collectionItem.name) {
       return {
         ...collection,
