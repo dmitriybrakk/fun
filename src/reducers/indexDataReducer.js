@@ -33,6 +33,12 @@ export default (state = initialState, action) => {
         isLoading: false
       };
 
+    case types.SWITCH_INDEX_TYPE:
+      return {
+        ...state,
+        currentType: action.payload.type
+      };
+
     default:
       return state;
   }

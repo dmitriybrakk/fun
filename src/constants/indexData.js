@@ -10,3 +10,8 @@ export const INDEX_TYPES = {
   QQQ: 'QQQ',
   SPY: 'SPY'
 };
+
+export const SELECTOR_TYPES = [
+  { value: INDEX_TYPES.QQQ, displayValue: 'NASDAQ' },
+  { value: INDEX_TYPES.SPY, displayValue: 'S&P500' }
+];

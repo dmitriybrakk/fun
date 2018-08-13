@@ -1,2 +1,3 @@
 export { IndexTable } from './IndexTable';
-export { InfoSection } from './InfoSection';
+export { InfoBlock } from './InfoBlock';
+export { TypeSelector } from './TypeSelector';

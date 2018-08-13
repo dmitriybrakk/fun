@@ -1,5 +1,8 @@
 import { connect } from 'react-redux';
 import _ from 'lodash';
+import { bindActionCreators } from 'redux';
+
+import { switchIndexType } from '../actions/indexData';
 
 import { getAssets } from '../utils/selectors';
 import { floatSum, floatMult } from '../utils/asset';
@@ -33,8 +36,15 @@ const mapStateToProps = (state) => {
 
   return {
     isLoading: state.indexData.isLoading,
-    indexTableData
+    indexTableData,
+    indexType: currentType
   };
 };
 
-export const IndexTableContainer = connect(mapStateToProps)(IndexTable);
+const mapDispatchToProps = dispatch => ({
+  actions: bindActionCreators({
+    switchIndexType
+  }, dispatch)
+});
+
+export const IndexTableContainer = connect(mapStateToProps, mapDispatchToProps)(IndexTable);

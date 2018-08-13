@@ -21,3 +21,12 @@ export function loadIndexDataFailure() {
     type: types.LOAD_INDEX_DATA_FAILURE
   };
 }
+
+export function switchIndexType(type) {
+  return {
+    type: types.SWITCH_INDEX_TYPE,
+    payload: {
+      type
+    }
+  };
+}

@@ -1,6 +1,6 @@
 import React from 'react';
 
-export const InfoSection = ({
+export const InfoBlock = ({
   portfolioInvestment,
   indexTotalValue,
   currentPortfolioValue,

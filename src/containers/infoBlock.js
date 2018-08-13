@@ -4,7 +4,7 @@ import _ from 'lodash';
 import { getAssets } from '../utils/selectors';
 import { floatSum, floatMult, floatDivison } from '../utils/asset';
 
-import { InfoSection } from '../components/index-table';
+import { InfoBlock } from '../components/index-table';
 
 const mapStateToProps = (state) => {
   const assets = getAssets(state);
@@ -29,14 +29,15 @@ const mapStateToProps = (state) => {
   });
 
   const indexTotalValue = (indexValues && lastUpdate && floatMult(indexLotsSum, indexValues[lastUpdate]['4. close'])) || 0;
+  const indexProfitability = (indexTotalValue && floatDivison(portfolioInvestment, indexTotalValue).toFixed(2)) || 0;
 
   return {
     portfolioInvestment: portfolioInvestment.toFixed(4),
     indexTotalValue: indexTotalValue.toFixed(4),
     currentPortfolioValue: currentPortfolioValue.toFixed(4),
-    indexProfitability: floatDivison(portfolioInvestment, indexTotalValue).toFixed(2),
+    indexProfitability,
     portfolioProfitability: floatDivison(portfolioInvestment, currentPortfolioValue).toFixed(2)
   };
 };
 
-export const InfoSectionContainer = connect(mapStateToProps)(InfoSection);
+export const InfoBlockContainer = connect(mapStateToProps)(InfoBlock);
