@@ -8,6 +8,7 @@ import {
   fork
 } from 'redux-saga/effects';
 import _ from 'lodash';
+import moment from 'moment';
 
 import { APP_LOADED } from '../../constants/action-types/app';
 import { SWITCH_INDEX_TYPE } from '../../constants/action-types/indexData';
@@ -43,7 +44,7 @@ function* handleLoadIndexData() {
     if (indexData) {
       yield put(loadIndexDataSuccess(
         indexData['Time Series (Daily)'],
-        indexData['Meta Data']['3. Last Refreshed']
+        moment(indexData['Meta Data']['3. Last Refreshed']).format('YYYY-MM-DD')
       ));
     } else {
       yield put(loadIndexDataFailure());

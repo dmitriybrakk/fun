@@ -32,7 +32,7 @@ export class Portfolio extends Component {
         >
           Add asset
         </button>
-        {assets.length && (
+        {assets.length ? (
           <div className="table">
             <div className="table_heading">
               {Header}
@@ -45,7 +45,7 @@ export class Portfolio extends Component {
               />
             ))}
           </div>
-        )}
+        ) : null}
       </div>
     );
   }

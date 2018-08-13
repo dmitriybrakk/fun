@@ -1,5 +1,6 @@
 import { connect } from 'react-redux';
 import _ from 'lodash';
+import moment from 'moment';
 
 import { getAssets } from '../utils/selectors';
 import { floatSum, floatMult, floatDivison } from '../utils/asset';

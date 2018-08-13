@@ -26,13 +26,19 @@ export const IndexTable = ({
     );
   }
 
+  const indexValues = Object.values(indexTableData);
+
+  if (!indexValues.length) {
+    return null;
+  }
+
   return (
     <div className="content">
       <div className="table">
         <div className="table_heading">
           {Header}
         </div>
-        {Object.values(indexTableData).map(dataRecord => (
+        {indexValues.map(dataRecord => (
           <TableItem
             key={dataRecord.date}
             dataRecord={dataRecord}
