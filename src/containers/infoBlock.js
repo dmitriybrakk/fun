@@ -29,7 +29,7 @@ const mapStateToProps = (state) => {
   });
 
   const latestClosePrice = _.get(indexValues, [lastUpdate, '4. close']);
-  const indexTotalValue = (indexValues && lastUpdate && latestClosePrice && floatMult(indexLotsSum, latestClosePrice)) || 0;
+  const indexTotalValue = (latestClosePrice && floatMult(indexLotsSum, latestClosePrice)) || 0;
   const indexProfitability = (portfolioInvestment && indexTotalValue && floatDivison(portfolioInvestment, indexTotalValue).toFixed(2)) || 0;
   const portfolioProfitability = (portfolioInvestment && currentPortfolioValue && floatDivison(portfolioInvestment, currentPortfolioValue).toFixed(2)) || 0;
 
