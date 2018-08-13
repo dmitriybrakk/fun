@@ -16,17 +16,17 @@ const mapStateToProps = (state) => {
 
   const indexTableData = indexValues ? assets.reduce((data, asset) => {
     const { date } = asset;
-    const close = indexValues[date]['4. close'];
+    const close = _.get(indexValues, [date, '4. close'], 'N/A');
     const assetsTotal = data[date] ? floatSum(data[date].assetsTotal, asset.total) : asset.total;
 
-    const indexQty = parseInt((assetsTotal / close), 10);
-    const totalIndexValue = floatMult(indexQty, close).toFixed(4);
+    const indexQty = close !== 'N/A' ? parseInt((assetsTotal / close), 10) : 0;
+    const totalIndexValue = close !== 'N/A' ? floatMult(indexQty, close).toFixed(4) : 0;
 
     return {
       ...data,
       [date]: {
         date,
-        assetsTotal,
+        assetsTotal: assetsTotal.toFixed(4),
         close,
         indexQty,
         totalIndexValue

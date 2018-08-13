@@ -20,25 +20,6 @@ import './styles.scss';
 const uuidv1 = require('uuid/v1');
 
 export class AssetFormComponent extends Component {
-  componentWillMount() {
-    document.addEventListener('keydown', this.onKeyPressed);
-  }
-
-  componentWillUnmount() {
-    document.removeEventListener('keydown', this.onKeyPressed);
-  }
-
-  onKeyPressed = (e) => {
-    if (e.key === 'Escape') {
-      this.handleClose();
-    }
-
-    if (e.key === 'Enter') {
-      e.preventDefault();
-      this.props.handleSubmit(this.handleSubmit)();
-    }
-  };
-
   handleClose = () => {
     this.props.onClose();
   };
@@ -95,7 +76,7 @@ export class AssetFormComponent extends Component {
       const { name } = field;
 
       const isTotalField = name === 'total';
-      const totalValue = (isTotalField && toPrecision(totalSum, 4)) || undefined;
+      const totalValue = (isTotalField && totalSum.toFixed(4)) || undefined;
 
       return (
         <Field

@@ -41,7 +41,7 @@ export const FIELDS_NAMES = [
   { name: 'name', displayName: 'Name' },
   { name: 'date', displayName: 'Date' },
   { name: 'quantity', displayName: 'Qty' },
-  { name: 'price', displayName: 'Price' },
-  { name: 'comission', displayName: 'Comission' },
-  { name: 'currentPrice', displayName: 'Current Price' },
+  { name: 'price', displayName: 'Price', unit: '($)' },
+  { name: 'comission', displayName: 'Comission', unit: '($)' },
+  { name: 'currentPrice', displayName: 'Current Price', unit: '($)' },
 ];

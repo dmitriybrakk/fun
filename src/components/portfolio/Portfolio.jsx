@@ -12,7 +12,7 @@ const Header = FIELDS_NAMES.map(field => (
     key={field.name}
     className="table_header"
   >
-    {field.displayName}
+    {field.displayName} {field.unit}
   </div>
 ));
 
