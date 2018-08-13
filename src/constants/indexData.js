@@ -15,3 +15,11 @@ export const SELECTOR_TYPES = [
   { value: INDEX_TYPES.QQQ, displayValue: 'NASDAQ' },
   { value: INDEX_TYPES.SPY, displayValue: 'S&P500' }
 ];
+
+export const INFO_SECTION_VALUES = [
+  { property: 'portfolioInvestment', displayName: 'Portfolio investment' },
+  { property: 'indexTotalValue', displayName: 'Index total value' },
+  { property: 'currentPortfolioValue', displayName: 'Current portfolio value' },
+  { property: 'indexProfitability', displayName: 'Index profitability', unit: '%' },
+  { property: 'portfolioProfitability', displayName: 'Portfolio profitability', unit: '%' },
+];

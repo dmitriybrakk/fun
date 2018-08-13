@@ -4,7 +4,6 @@ import { FIELDS_NAMES } from '../../constants';
 
 import '../../styles/buttons.scss';
 import '../../styles/table.scss';
-import './styles.scss';
 
 export class AssetItem extends Component {
   handleEditAsset = () => {
@@ -20,17 +19,15 @@ export class AssetItem extends Component {
     const { assetValues } = this.props;
 
     return (
-      <div className="asset">
-        <button
-          className="table_row"
-          onClick={this.handleEditAsset}
-        >
-          {FIELDS_NAMES.map(field => (
-            <div key={field} className="table_cell">
-              {assetValues[field]}
-            </div>
-          ))}
-        </button>
+      <div
+        className="table_row__selectable"
+        onClick={this.handleEditAsset}
+      >
+        {FIELDS_NAMES.map(field => (
+          <div key={field.name} className="table_cell">
+            {assetValues[field.name]}
+          </div>
+        ))}
         <button
           className="button button_orange"
           onClick={this.handleRemoveAsset}

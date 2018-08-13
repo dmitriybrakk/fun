@@ -1,9 +1,10 @@
 import { all } from 'redux-saga/es/effects';
 
-import { watchAppLoad } from './app';
+import { watchAppLoad, watchIndexTypeChange } from './app';
 
 export default function* () {
   yield all([
-    watchAppLoad()
+    watchAppLoad(),
+    watchIndexTypeChange()
   ]);
 }

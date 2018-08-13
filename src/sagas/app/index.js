@@ -2,7 +2,10 @@ import {
   takeLatest,
   select,
   call,
-  put
+  put,
+  take,
+  cancel,
+  fork
 } from 'redux-saga/effects';
 import _ from 'lodash';
 
@@ -14,7 +17,18 @@ import { loadIndexData, loadIndexDataFailure, loadIndexDataSuccess } from '../..
 import { INDEX_TYPES } from '../../constants/indexData';
 
 export function* watchAppLoad() {
-  yield takeLatest([APP_LOADED, SWITCH_INDEX_TYPE], handleLoadIndexData);
+  yield takeLatest(APP_LOADED, handleLoadIndexData);
+}
+
+export function* watchIndexTypeChange() {
+  let task;
+  while (true) {
+    yield take(SWITCH_INDEX_TYPE);
+    if (task) {
+      yield cancel(task);
+    }
+    task = yield fork(handleLoadIndexData);
+  }
 }
 
 function* handleLoadIndexData() {

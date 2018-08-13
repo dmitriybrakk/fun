@@ -1,56 +1,59 @@
 @import "colors";
 
+%row {
+  display: table-row;
+  padding: 20px;
+  align-items: center;
+  text-align: left;
+  background: $white;
+}
+
+%cell {
+  display: table-cell;
+  padding: 20px;
+  color: $text-color;
+}
+
+.content {
+  padding: 30px
+}
+
 .table {
   width: 100%;
   margin-top: 30px;
-
-  &_header {
-    display: flex;
-    flex-direction: row;
-    align-items: center;
-    border-bottom: 1px solid $grey;
-
-    &__title {
-      color: #5d5d5d;
-      width: 13%;
-      padding: 3px 5px;
-    }
-  }
+  display: table;
 
   &_row {
-    display: flex;
-    width: 100%;
-    flex-direction: row;
-    border: none;
-    align-items: center;
-    text-align: left;
-    background: #fff;
-    padding: 20px;
+    @extend %row;
+  }
+
+  &_row__selectable {
+    @extend %row;
+    border-bottom: 1px solid $grey !important;
 
     &:hover {
-      cursor: pointer;
-      background: $hover;
-    }
+    cursor: pointer;
+    background: $hover;
+  }
 
     &:focus {
       outline: none;
     }
   }
 
-  &_cell {
-    margin-left: 10px;
-    font-size: 13px;
-    color: $text-color;
-    box-sizing: border-box;
-    flex-grow: 1;
-    width: 13%;
-    overflow: hidden;
-    padding: 3px 5px;
-    text-align: left;
-    vertical-align: top;
+  &_heading {
+    display: table-header-group;
+  }
 
-    &:first-child {
-      margin: 0;
-    }
+  &_header {
+    @extend %cell;
+    text-align: left;
+    font-weight: 800;
+    border-bottom: 1px solid $grey;
+  }
+
+  &_cell {
+    @extend %cell;
+    font-size: 14px;
   }
 }

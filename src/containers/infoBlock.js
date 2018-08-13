@@ -4,7 +4,7 @@ import _ from 'lodash';
 import { getAssets } from '../utils/selectors';
 import { floatSum, floatMult, floatDivison } from '../utils/asset';
 
-import { InfoBlock } from '../components/index-table';
+import { InfoBlock } from '../components/info-block';
 
 const mapStateToProps = (state) => {
   const assets = getAssets(state);

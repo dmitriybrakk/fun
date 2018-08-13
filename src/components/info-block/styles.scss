@@ -1,0 +1,11 @@
+@import '../../styles/colors';
+
+.info-section {
+
+  &_value {
+    color: $text-color;
+    font-size: 16px;
+    line-height: 1.45;
+    font-weight: 400;
+  }
+}

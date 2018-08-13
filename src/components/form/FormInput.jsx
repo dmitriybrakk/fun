@@ -2,6 +2,8 @@ import React from 'react';
 import DatePicker from 'react-datepicker';
 import moment from 'moment';
 
+import './styles.scss';
+
 export const FormInput = ({
   input,
   label,
@@ -10,9 +12,11 @@ export const FormInput = ({
   customValue,
   disabled
 }) => (
-  <div>
-    <label>{label}</label>
-    <div>
+  <div className="form_field">
+    <label className="form_field-label">
+      {label}
+    </label>
+    <div className="form_field-input">
       {label === 'Date' ? (
         <DatePicker
           {...input}

@@ -1,3 +1,6 @@
+@import '../../styles/colors';
+@import '../../styles/buttons';
+
 .form-wrapper{
   position: absolute;
   bottom:0;
@@ -11,23 +14,63 @@
 }
 
 .form {
-  width: 200px;
   background: #fff;
   border-radius: 5px;
-  min-width: 500px;
+  min-width: 200px;
   position: relative;
   text-align: center;
+  padding: 30px;
+
+  &_field {
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
+    padding: 5px;
+    align-items: center;
+
+    &-label {
+      font-weight: 600;
+      margin: 0 10px 0 0;
+    }
+
+    &-input {
+      font-weight: normal;
+      box-sizing: border-box;
+      color: $text-color;
+      background-color: $white;
+      background-image: none;
+      border-radius: 5px;
+      display: flex;
+      flex-direction: column;
+
+      input {
+        padding: 5px;
+      }
+
+      span {
+        margin-top: 5px;
+        color: red;
+      }
+    }
+  }
 
   &_button {
-    font-size: 15px;
-    color: gray;
-    padding: 5px;
-    border-radius: 5px;
+    @extend .button;
+    border-color: $orange-1;
+    color: $orange-1;
+
+    &:hover {
+      @extend .button_orange
+    }
   }
 }
 
 .buttons {
-  margin: 10px 0;
+  margin: 20px 0 0 0;
   display: flex;
   justify-content: space-around;
+}
+
+.error {
+  color: $error
 }

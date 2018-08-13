@@ -2,9 +2,19 @@ import React, { Component } from 'react';
 
 import { AssetItemContainer } from '../../containers';
 
+import { FIELDS_NAMES } from '../../constants';
+
 import '../../styles/buttons.scss';
 import '../../styles/table.scss';
-import './styles.scss';
+
+const Header = FIELDS_NAMES.map(field => (
+  <div
+    key={field.name}
+    className="table_header"
+  >
+    {field.displayName}
+  </div>
+));
 
 export class Portfolio extends Component {
   handleClick = () => {
@@ -12,6 +22,8 @@ export class Portfolio extends Component {
   };
 
   render() {
+    const { assets } = this.props;
+
     return (
       <div className="content">
         <button
@@ -20,15 +32,20 @@ export class Portfolio extends Component {
         >
           Add asset
         </button>
-        <div className="table">
-          {this.props.assets.map(values => (
-            <AssetItemContainer
-              key={values.id}
-              assetId={values.id}
-              assetValues={values}
-            />
-          ))}
-        </div>
+        {assets.length && (
+          <div className="table">
+            <div className="table_heading">
+              {Header}
+            </div>
+            {assets.map(values => (
+              <AssetItemContainer
+                key={values.id}
+                assetId={values.id}
+                assetValues={values}
+              />
+            ))}
+          </div>
+        )}
       </div>
     );
   }

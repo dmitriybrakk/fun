@@ -14,6 +14,7 @@ import { FORM_FIELDS, FIELDS_NAMES } from '../../constants/index';
 
 import { toPrecision, getTotal } from '../../utils/asset';
 
+import { FormInput } from './FormInput';
 import './styles.scss';
 
 const uuidv1 = require('uuid/v1');
@@ -49,7 +50,7 @@ export class AssetFormComponent extends Component {
       assetId
     } = this.props;
 
-    if (FIELDS_NAMES.every(field => _.has(values, field))) {
+    if (FIELDS_NAMES.every(field => _.has(values, field.name))) {
       const {
         price,
         comission,
@@ -75,10 +76,10 @@ export class AssetFormComponent extends Component {
 
       this.handleClose();
     } else {
-      FIELDS_NAMES.forEach((field) => {
-        if (!_.has(values, field)) {
+      FIELDS_NAMES.forEach(({ name }) => {
+        if (!_.has(values, name)) {
           throw new SubmissionError({
-            [field]: 'This field is required',
+            [name]: 'This field is required',
             _error: 'Please fill in blank fields'
           });
         }
@@ -102,6 +103,7 @@ export class AssetFormComponent extends Component {
           {...field}
           customValue={totalValue}
           disabled={isTotalField}
+          component={FormInput}
         />
       );
     });
@@ -111,14 +113,14 @@ export class AssetFormComponent extends Component {
     <div className="buttons">
       <button
         type="button"
-        className="form-button"
+        className="form_button"
         onClick={this.handleClose}
       >
         Close
       </button>
       <button
         type="submit"
-        className="form-button"
+        className="form_button"
       >
         {this.props.assetId ? 'Save' : 'Create'}
       </button>
@@ -133,7 +135,7 @@ export class AssetFormComponent extends Component {
         <div className="form">
           <Form onSubmit={handleSubmit(this.handleSubmit)}>
             {this.renderFields()}
-            {error && <strong>{error}</strong>}
+            {error && <strong className="error">{error}</strong>}
             {this.renderButtons()}
           </Form>
         </div>

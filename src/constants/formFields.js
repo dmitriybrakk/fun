@@ -1,49 +1,47 @@
-import { FormInput } from '../components/form';
-
 export const FORM_FIELDS = [
   {
     name: 'name',
     type: 'text',
-    label: 'Name',
-    component: FormInput
+    label: 'Name'
   },
   {
     name: 'date',
     type: 'text',
-    label: 'Date',
-    component: FormInput
+    label: 'Date'
   },
   {
     name: 'quantity',
     type: 'number',
-    label: 'Quantity',
-    component: FormInput
+    label: 'Quantity'
   },
   {
     name: 'price',
     type: 'text',
-    label: 'Price',
-    component: FormInput
+    label: 'Price'
   },
   {
     name: 'total',
     type: 'text',
     label: 'Total',
-    component: FormInput,
     readOnly: true
   },
   {
     name: 'comission',
     type: 'text',
-    label: 'Comission',
-    component: FormInput
+    label: 'Comission'
   },
   {
     name: 'currentPrice',
     type: 'text',
-    label: 'Current Price',
-    component: FormInput
+    label: 'Current Price'
   }
 ];
 
-export const FIELDS_NAMES = ['name', 'date', 'quantity', 'price', 'comission', 'currentPrice'];
+export const FIELDS_NAMES = [
+  { name: 'name', displayName: 'Name' },
+  { name: 'date', displayName: 'Date' },
+  { name: 'quantity', displayName: 'Qty' },
+  { name: 'price', displayName: 'Price' },
+  { name: 'comission', displayName: 'Comission' },
+  { name: 'currentPrice', displayName: 'Current Price' },
+];

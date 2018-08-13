@@ -1,60 +1,44 @@
-import React, { Component } from 'react';
-import { MoonLoader } from 'react-spinners';
+import React from 'react';
 
 import { ENTRIES } from '../../constants/indexData';
 
-import { InfoBlockContainer } from '../../containers';
-
-import { TypeSelector } from './';
+import { Spinner, TableItem } from './';
 
 import '../../styles/table.scss';
 import './styles.scss';
 
-export class IndexTable extends Component {
-  handleChangeType = (e) => {
-    this.props.actions.switchIndexType(e.target.value);
-  };
+const Header = ENTRIES.map(entry => (
+  <div
+    key={entry.name}
+    className="table_header"
+  >
+    {entry.displayName}
+  </div>
+));
 
-  render() {
-    const {
-      isLoading,
-      indexTableData,
-      indexType
-    } = this.props;
-
-    if (isLoading) {
-      return (
-        <div className="spinner">
-          <MoonLoader
-            sizeUnit="px"
-            size={60}
-            color="#ff5722"
-          />
-          <div className="spinner-text">Loading index data</div>
-        </div>
-      );
-    }
-
+export const IndexTable = ({
+  isLoading,
+  indexTableData
+}) => {
+  if (isLoading) {
     return (
-      <div className="table">
-        {Object.values(indexTableData).map(dataRecord => (
-          <div className="table_row" key={dataRecord.date}>
-            {ENTRIES.map(entry => (
-              <div
-                key={entry.name}
-                className="table_cell"
-              >
-                {dataRecord[entry.name]}
-              </div>
-            ))}
-          </div>
-        ))}
-        <InfoBlockContainer />
-        <TypeSelector
-          value={indexType}
-          onChange={this.handleChangeType}
-        />
-      </div>
+      <Spinner />
     );
   }
-}
+
+  return (
+    <div className="content">
+      <div className="table">
+        <div className="table_heading">
+          {Header}
+        </div>
+        {Object.values(indexTableData).map(dataRecord => (
+          <TableItem
+            key={dataRecord.date}
+            dataRecord={dataRecord}
+          />
+        ))}
+      </div>
+    </div>
+  );
+};

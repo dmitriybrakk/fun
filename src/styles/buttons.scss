@@ -3,8 +3,6 @@
 .button {
   display: inline-block;
   position: relative;
-  padding: 8px 20px;
-  min-width: 90px;
   font-size: 14px;
   line-height: 22px;
   border: 1px solid transparent;
@@ -14,6 +12,8 @@
   transition: border .2s ease,background-color .2s ease,color .15s ease;
   cursor: pointer;
   box-sizing: border-box;
+  padding: 8px 20px;
+  min-width: 90px;
 
   &_bold {
     font-size: 12px;
