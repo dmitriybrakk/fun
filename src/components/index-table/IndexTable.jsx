@@ -1,14 +1,17 @@
 import React from 'react';
 import { MoonLoader } from 'react-spinners';
 
-import { ENTRIES } from '../../constants/stockTable';
+import { ENTRIES } from '../../constants/indexData';
 
-import { InfoSection } from './';
+import { InfoSectionContainer } from '../../containers';
 
 import '../../styles/table.scss';
 import './styles.scss';
 
-export const IndexTable = ({ isLoading, indexTableData }) => {
+export const IndexTable = ({
+  isLoading,
+  indexTableData
+}) => {
   if (isLoading) {
     return (
       <div className="spinner">
@@ -17,7 +20,7 @@ export const IndexTable = ({ isLoading, indexTableData }) => {
           size={60}
           color="#ff5722"
         />
-        <div className="spinner-text">Loading stock data</div>
+        <div className="spinner-text">Loading index data</div>
       </div>
     );
   }
@@ -31,7 +34,7 @@ export const IndexTable = ({ isLoading, indexTableData }) => {
           ))}
         </div>
       ))}
-      <InfoSection />
+      <InfoSectionContainer />
     </div>
   );
 };

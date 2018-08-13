@@ -34,8 +34,8 @@ export function* apiCall({ URL, method = 'GET' }) {
   return null;
 }
 
-export function* getStock() {
+export function* fetchIndexData(type) {
   return yield apiCall({
-    URL: `https://www.alphavantage.co/query?function=TIME_SERIES_DAILY&symbol=QQQ&outputsize=full&apikey=${API_KEY}`
+    URL: `https://www.alphavantage.co/query?function=TIME_SERIES_DAILY&symbol=${type}&outputsize=full&apikey=${API_KEY}`
   });
 }

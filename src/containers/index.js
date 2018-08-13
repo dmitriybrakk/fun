@@ -3,3 +3,4 @@ export { PortfolioContainer } from './portfolio';
 export { AssetItemContainer } from './asset';
 export { ModalContainer } from './modal';
 export { IndexTableContainer } from './indexTable';
+export { InfoSectionContainer } from './infoSection';

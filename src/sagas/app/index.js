@@ -7,28 +7,30 @@ import {
 
 import { APP_LOADED } from '../../constants/action-types/app';
 
-import { getStock } from '../api/stock';
-import { loadStock, loadStockFailure, loadStockSuccess } from '../../actions/stock';
+import { fetchIndexData } from '../api/indexData';
+import { loadIndexData, loadIndexDataFailure, loadIndexDataSuccess } from '../../actions/indexData';
+import { INDEX_TYPES } from '../../constants/indexData';
 
 export function* watchAppLoad() {
-  yield takeLatest(APP_LOADED, handleLoadStock);
+  yield takeLatest(APP_LOADED, handleLoadIndexData);
 }
 
-function* handleLoadStock() {
-  const lastLoadDate = yield select(state => state.stock.lastLoadDate);
-  const currentStock = yield select(state => state.stock.data);
-  const date = new Date();
-  const today = `${date.getDate()}/${date.getMonth() + 1}/${date.getFullYear()}`;
+function* handleLoadIndexData() {
+  const currentIndexData = yield select(state => state.indexData);
+  const { currentType, data } = currentIndexData;
 
-  if (!lastLoadDate || today !== lastLoadDate || !Object.keys(currentStock).length) {
-    yield put(loadStock());
+  if (!data || !data[INDEX_TYPES[currentType]]) {
+    yield put(loadIndexData());
 
-    const stock = yield call(getStock);
+    const indexData = yield call(fetchIndexData, currentType);
 
-    if (stock) {
-      yield put(loadStockSuccess(today, stock['Time Series (Daily)']));
+    if (indexData) {
+      yield put(loadIndexDataSuccess(
+        indexData['Time Series (Daily)'],
+        indexData['Meta Data']['3. Last Refreshed']
+      ));
     } else {
-      yield put(loadStockFailure());
+      yield put(loadIndexDataFailure());
     }
   }
 }

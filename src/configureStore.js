@@ -20,7 +20,7 @@ const composedMiddleware = composeEnhancers(applyMiddleware(...middlewares));
 const persistConfig = {
   key: 'root',
   storage,
-  whitelist: ['assets', 'stock']
+  whitelist: ['assets']
 };
 const persistedReducer = persistReducer(persistConfig, rootReducer);
 
