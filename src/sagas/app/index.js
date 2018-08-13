@@ -42,9 +42,11 @@ function* handleLoadIndexData() {
     const indexData = yield call(fetchIndexData, currentType);
 
     if (indexData) {
+      const lastUpdate = _.get(indexData, ['Meta Data', '3. Last Refreshed'], moment().subtract(1, 'd'));
+
       yield put(loadIndexDataSuccess(
         indexData['Time Series (Daily)'],
-        moment(indexData['Meta Data']['3. Last Refreshed']).format('YYYY-MM-DD')
+        moment(lastUpdate).format('YYYY-MM-DD')
       ));
     } else {
       yield put(loadIndexDataFailure());
