@@ -1,6 +1,5 @@
 import { connect } from 'react-redux';
 import _ from 'lodash';
-import moment from 'moment';
 
 import { getAssets } from '../utils/selectors';
 import { floatSum, floatMult, floatDivison } from '../utils/asset';
@@ -30,7 +29,7 @@ const mapStateToProps = (state) => {
   });
 
   const indexTotalValue = (indexValues && lastUpdate && floatMult(indexLotsSum, indexValues[lastUpdate]['4. close'])) || 0;
-  const indexProfitability = (indexTotalValue && floatDivison(portfolioInvestment, indexTotalValue).toFixed(2)) || 0;
+  const indexProfitability = (portfolioInvestment && indexTotalValue && floatDivison(portfolioInvestment, indexTotalValue).toFixed(2)) || 0;
 
   return {
     portfolioInvestment: portfolioInvestment.toFixed(4),
