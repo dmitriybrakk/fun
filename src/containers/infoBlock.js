@@ -31,13 +31,14 @@ const mapStateToProps = (state) => {
   const latestClosePrice = _.get(indexValues, [lastUpdate, '4. close']);
   const indexTotalValue = (indexValues && lastUpdate && latestClosePrice && floatMult(indexLotsSum, latestClosePrice)) || 0;
   const indexProfitability = (portfolioInvestment && indexTotalValue && floatDivison(portfolioInvestment, indexTotalValue).toFixed(2)) || 0;
+  const portfolioProfitability = (portfolioInvestment && currentPortfolioValue && floatDivison(portfolioInvestment, currentPortfolioValue).toFixed(2)) || 0;
 
   return {
     portfolioInvestment: portfolioInvestment.toFixed(4),
     indexTotalValue: indexTotalValue.toFixed(4),
     currentPortfolioValue: currentPortfolioValue.toFixed(4),
     indexProfitability,
-    portfolioProfitability: floatDivison(portfolioInvestment, currentPortfolioValue).toFixed(2)
+    portfolioProfitability
   };
 };
 

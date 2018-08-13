@@ -7,8 +7,6 @@ import { AppContainer } from './containers';
 
 import { store, persistor } from './configureStore';
 
-import registerServiceWorker from './utils/registerServiceWorker';
-
 ReactDOM.render(
   <Provider store={store}>
     <PersistGate loading={null} persistor={persistor}>
@@ -17,5 +15,3 @@ ReactDOM.render(
   </Provider>,
   document.getElementById('root')
 );
-
-registerServiceWorker();
